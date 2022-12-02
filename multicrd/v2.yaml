@@ -1,0 +1,5 @@
+apiVersion: example.com/v2
+kind: ReplicaLimit
+metadata:
+  name: replica-limit-low.example.com
+minReplicas: 1

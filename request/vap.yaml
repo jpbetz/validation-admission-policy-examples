@@ -1,0 +1,19 @@
+apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: "replicalimit-policy.example.com"
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups:   ["apps"]
+        apiVersions: ["v1"]
+        operations:  ["CREATE", "UPDATE"]
+        resources:   ["deployments"]
+  validations:
+    - expression: "request.kind.group == 'apps'"
+    - expression: "request.kind.version == 'v1'"
+    - expression: "request.kind.kind == 'Deployment'"
+    - expression: "object.apiVersion == 'apps/v1'"
+    - expression: "object.kind == 'Deployment'"
+    - expression: "object.apiVersion == 'apps/v1beta1'"
+

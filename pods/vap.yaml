@@ -1,0 +1,18 @@
+apiVersion: admissionregistration.k8s.io/v1alpha1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: "replicalimit-policy.example.com"
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups:   [""]
+        apiVersions: ["v1"]
+        operations:  ["CREATE", "UPDATE"]
+        resources:   ["pods"]
+  validations:
+    - expression: "object.spec.containers.all(c, c.image.matches('^my-registry\\\\.io/images/[a-z0-9-_]+\\\\@sha256:[a-zA-Z0-9]{32,}$'))"
+      message: "not all images are of required form: my-registry.io/images/<image-name:[a-z0-9_-]>@sha256:<digest-hex>"
+    - expression: "object.spec.containers.all(c, c.imagePullPolicy == 'IfNotPresent')"
+      message: "not all images use imagePullPolicy 'IfNotPresent'"
+    - expression: "false"
+

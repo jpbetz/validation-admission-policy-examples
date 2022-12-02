@@ -1,0 +1,31 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: replicalimits.example.com
+spec:
+  names:
+    plural: replicalimits
+    kind: ReplicaLimit
+  group: example.com
+  scope: Cluster
+  conversion:
+    strategy: None
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            maxReplicas:
+              type: integer
+    - name: v2
+      served: true
+      storage: false
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            maxReplicas:
+              type: integer

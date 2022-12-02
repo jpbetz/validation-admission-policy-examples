@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: replica-limit
+  namespace: default
+data:
+  maxReplicas: '3'
